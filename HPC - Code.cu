@@ -66,7 +66,9 @@ int main() {
    // vector<int> b = a;
    // sort(b.begin(), b.end());
    // cout << b[k - 1] << endl;
-    while (a.size() > 4) {
+    int delta = 4;
+    // Keep filtering the elements parallely until a certain limit is reached.
+    while (a.size() > delta) {
         int b = ceil(log2(a.size())) + 1;
         vector<int> s = getSplitterElements(a, b);
         sort(s.begin(), s.end());
@@ -115,6 +117,8 @@ int main() {
         cudaMemcpy(a.data(), d_elementInBucket, numElements * sizeof(int), cudaMemcpyDeviceToHost);
       //  break;
     }
+    // Now the array size is < our chosen delta
+    // Can sort naively now
     sort(a.begin(), a.end());
     cout << a[k - 1] << endl;
     return 0;
